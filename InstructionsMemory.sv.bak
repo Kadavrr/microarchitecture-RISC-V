@@ -1,0 +1,3 @@
+module InstructionsMemory(
+	input logic A,
+	output logic RD)
