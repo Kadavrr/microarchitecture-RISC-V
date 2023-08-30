@@ -8,6 +8,7 @@ module InstructionsMemory#(
 logic [DATA_WIDTH-1:0] memory [2**ADDR_WIDTH];
 always_ff @ (posedge clk) begin
 	 
-		memory[ADDR3] <= WD3;
-		
+		memory[ADDR] <= WD3;
+end
+assign RD = memory[ADDR];
 endmodule;
