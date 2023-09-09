@@ -1,0 +1,7 @@
+module ControlUnit
+(	input logic [6:0] op, [14:12] funct3, [31:25] funct7,
+	output logic RegWriteD, ResultSrcD, MemWriteD,
+	output logic JumpD, BranchD, ALUControlD, ALUSrcD, ImmSrcD);
+
+	case(
+endmodule

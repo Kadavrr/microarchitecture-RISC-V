@@ -1,0 +1,10 @@
+module ImmediateExtension(
+	input logic SrcExt,
+	input logic Imm, 
+	output logic ImmExtD);
+	
+always_comb begin 
+
+end
+
+endmodule
