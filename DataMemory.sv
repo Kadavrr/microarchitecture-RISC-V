@@ -15,7 +15,9 @@ always_ff @ (posedge clk) begin
 		memory[ADDR2] <= WD2;
 		end
 	end
-assgin RD1 = memory[ADDR1];
-assing RD2 = memory[ADDR2];
+always_comb begin
+	RD1 = memory[ADDR1];
+	RD2 = memory[ADDR2];
+end
 	
 endmodule
