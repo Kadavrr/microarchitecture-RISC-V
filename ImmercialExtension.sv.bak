@@ -1,3 +1,0 @@
-module ImmercialExtencion(
-	input logic A, 
-	output logic ImmExtD)
