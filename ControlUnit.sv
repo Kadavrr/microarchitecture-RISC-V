@@ -1,19 +1,27 @@
 module ControlUnit
-(	input logic [6:0] op, [14:12] funct3, [31:25] funct7,
+(	input logic [6:0] op,
+	input logic [14:12] funct3, 
+	input logic [31:25] funct7,
 	output logic RegWriteD, ResultSrcD, MemWriteD,
-	output logic JumpD, BranchD, [3:0] ALUControlD, ALUSrcD, ImmSrcD
-	output logic [1:0] StoreSrcD, [2:0] TypeBranchD, [2:0] LoadPartD
+	output logic JumpD, BranchD, ALUSrcD, ImmSrcD,
+	output logic [3:0] ALUControlD, 
+	output logic [1:0] StoreSrcD, 
+	output logic [2:0] TypeBranchD,
+	output logic [2:0] LoadPartD,
 	output logic ALUSrcAD, SumSrcD);
 	//DataSrcD is needed to indicate a part of the word
-
+	
+	wire [16:0] AllCantrolSignals;
+	assign AllControlSignals = {RegWriteD, ResultSrcD, MemWriteD, JumpD, BranchD, ALUControlD[2:0], ALUSrcD, ImmSrcD, 
+								StoreSrcD[1:0], TypeBranchD[2:0] , LoadPartD[2:0] , ALUSrcAD, SumSrcD};
 	always_comb
-	AllControlSignals = {RegWriteD, ResultSrcD, MemWriteD, JumpD, BranchD, [2:0] ALUControlD, ALUSrcD, ImmSrcD,
-								[1:0] StoreSrcD, [2:0] TypeBranchD, [2:0] LoadPartD, ALUSrcAD, SumSrcD};
+	
 	case(op)
-		7'b0110011: ALUSrcD = 0; //R-Instructions
+		7'b0110011: begin
+						ALUSrcD = 0; //R-Instructions
 					   ResultSrcD = 00;
 						RegWriteD = 1;
-						MemwriteD = 0;
+						MemWriteD = 0;
 						JumpD = 0;
 						BranchD = 0;
 						ImmSrcD = 0;
@@ -21,8 +29,8 @@ module ControlUnit
 						LoadPartD = 3'b000;
 						ALUSrcAD = 0;
 						SumSrcD = 0;
-						case(func7) 
-							7'b0:	case(func3):
+						case(funct7) 
+							7'b0:	case(funct3)
 										3'b000: ALUControlD = 4'b0000; //ADD
 										3'b001: ALUControlD = 4'b0110; //SLL
 										3'b010: ALUControlD = 4'b0101; //SLT
@@ -39,11 +47,13 @@ module ControlUnit
 												default: AllControlSignals = 17'bx;
 											endcase
 							endcase
-		7'b0010011: ImmSrcD = 3'b001; //I-Instructions
+						end
+		7'b0010011: begin
+						ImmSrcD = 3'b001; //I-Instructions
 						ALUSrcD = 1;
 					   ResultSrcD = 00;
 						RegWriteD = 1;
-						MemwriteD = 0;
+						MemWriteD = 0;
 						JumpD = 0;
 						BranchD = 0;
 						StoreSrcD = 00;
@@ -65,7 +75,9 @@ module ControlUnit
 							3'b111: ALUControlD = 4'b0010; //ANDI
 							default: AllControlSignals = 17'bx;
 							endcase
-		7'b0100011: ImmSrcD = 3'b010; //S-Instructions
+						end
+		7'b0100011: begin
+						ImmSrcD = 3'b010; //S-Instructions
 						ALUSrcD = 1;
 						ResultSrcD = 00;
 						RegWriteD = 0;
@@ -82,7 +94,9 @@ module ControlUnit
 						   3'b010: StoreSrcD = 2'b00;//SW
 						   default: AllControlSignals = 17'bx;
 					   endcase
-		7'b1100011: ImmSrcD = 3'b011; //B-Instructions
+						end
+		7'b1100011: begin
+						ImmSrcD = 3'b011; //B-Instructions
 						ALUSrcD = 1;
 						ResultSrcD = 00;
 						RegWriteD = 0;
@@ -94,26 +108,40 @@ module ControlUnit
 						ALUSrcAD = 0;
 						SumSrcD = 0;
 						case(funct3) 
-							3'b000: TypeBranchD = 3'b000; //BEQ
+							3'b000: begin
+									  TypeBranchD = 3'b000; //BEQ
 									  ALUControlD = 4'b0000;
-							3'b001: TypeBranchD = 3'b001; //BNE
+									  end
+							3'b001: begin
+									  TypeBranchD = 3'b001; //BNE
 									  ALUControlD = 4'b0000;
-							3'b100: TypeBranchD = 3'b100; //BLT
+									  end
+							3'b100: begin
+									  TypeBranchD = 3'b100; //BLT
 									  ALUControlD = 4'b0101;
-							3'b101: TypeBranchD = 3'b101; //BGE
+									  end
+							3'b101: begin
+									  TypeBranchD = 3'b101; //BGE
 									  ALUControlD = 4'b0101;
-							3'b110: TypeBranchD = 3'b110; //BLTU
+									  end
+							3'b110: begin
+									  TypeBranchD = 3'b110; //BLTU
 									  ALUControlD = 4'b1001;
-							3'b111: TypeBranchD = 3'b111; //BGEU
+									  end
+							3'b111: begin
+									  TypeBranchD = 3'b111; //BGEU
 									  ALUControlD = 4'b1001;
+									  end
 							default: AllControlSignals = 17'bx;
 						endcase
-		7'b0000011: ImmSrcD = 3'b001; //I-Instructions
+						end
+		7'b0000011: begin
+						ImmSrcD = 3'b001; //I-Instructions
 						ALUSrcD = 1;
 						ALUControlD = 4'b0000;
 						ResultSrcD = 01;
 						MemWriteD = 0;
-						RegWrite = 1;
+						RegWriteD = 1;
 						JumpD = 0;
 						BranchD = 0;
 						StoreSrcD = 2'b00;
@@ -128,12 +156,14 @@ module ControlUnit
 							3'b101: LoadPartD = 3'b101; //LHU
 							default: AllControlSignals = 17'bx;
 						endcase
-		7'b0110111: ImmSrcD = 3'b100; //LUI U-Instruction
+						end
+		7'b0110111: begin
+						ImmSrcD = 3'b100; //LUI U-Instruction
 						ALUControlD = 4'b1011;
 						ALUSrcD = 1;
 						ResultSrcD = 00;
 						MemWriteD = 0;
-						RegWrite = 1;
+						RegWriteD = 1;
 						JumpD = 0;
 						BranchD = 0;
 						StoreSrcD = 2'b00;
@@ -141,44 +171,51 @@ module ControlUnit
 						LoadPartD = 3'b000;
 						ALUSrcAD = 0;
 						SumSrcD = 0;
-		7'b0010111: ImmSrcD = 3'b100; //AUIPC U-Instruction
+						end
+		7'b0010111: begin
+						ImmSrcD = 3'b100; //AUIPC U-Instruction
 						ALUSrcAD = 1;
 						ALUControlD = 4'b1100;
 						ResultSrcD = 00;
 						MemWriteD = 0;
-						RegWrite = 1;
+						RegWriteD = 1;
 						JumpD = 0;
 						BranchD = 0;
 						StoreSrcD = 2'b00;
 						TypeBranchD = 3'b000;
 						LoadPartD = 3'b000;
 						SumSrcD = 0;
-		7'b1101111: ImmSrcD = 3'b101; //JAL J-Instruction
+						end
+		7'b1101111: begin
+						ImmSrcD = 3'b101; //JAL J-Instruction
 						JumpD = 1;
 						ALUControlD = 4'b0000;
 						ALUSrcD = 1;
 						ALUSrcAD = 0;
 						ResultSrcD = 10;
 						MemWriteD = 0;
-						RegWrite = 1;
+						RegWriteD = 1;
 						BranchD = 0;
 						StoreSrcD = 00;
 						TypeBranchD = 3'b000;
 						LoadPartD = 3'b000;
 						SumSrcD = 0;
-		7'b1100111: ImmSrcD = 3'b001; //JALR I-Instruction
+						end
+		7'b1100111: begin 
+						ImmSrcD = 3'b001; //JALR I-Instruction
 						JumpD = 1;
 						ALUControlD = 4'b0000;
 						ALUSrcD = 1;
 						ALUSrcAD = 0;
 						ResultSrcD = 10;
 						MemWriteD = 0;
-						RegWrite = 1;
+						RegWriteD = 1;
 						BranchD = 0;
 						StoreSrcD = 00;
 						TypeBranchD = 3'b000;
 						LoadPartD = 3'b000;
 						SumSrcD = 1;
+						end
 		default: AllControlSignals = 17'bx; //all control signals must be X
 		endcase
 					

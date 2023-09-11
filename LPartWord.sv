@@ -7,17 +7,25 @@ module LPartWord#(
 	
 	always_comb begin
 	integer HalfWord = DATA_WIDTH/2;
-	case (StoreSrcM)
-		3'b001: ReadPartDataM[HalfWord-1:0] =  ReadDataM[HalfWord-1:0]; //LH
-				  ReadPartDataM[DATA_WIDTH-1:HalfWord] = ReadDatam[DATA_WIDTH];
-		3'b000: ReadPartDataM[7:0] = ReadData[7:0]; //LB
-				  ReadPartDataM[DATA_WIDTH-1:8] = ReadDatam[DATA_WIDTH];
+	case (LoadSrcM)
+		3'b001: begin
+				  ReadPartDataM[(DATA_WIDTH/2)-1:0] =  ReadDataM[(DATA_WIDTH/2)-1:0]; //LH
+				  ReadPartDataM[DATA_WIDTH-1:(DATA_WIDTH/2)] = ReadDataM[DATA_WIDTH];
+				  end
+		3'b000: begin
+				  ReadPartDataM[7:0] = ReadDataM[7:0]; //LB
+				  ReadPartDataM[DATA_WIDTH-1:8] = ReadDataM[DATA_WIDTH];
+				  end
 		3'b000: ReadPartDataM = ReadDataM; //LW
-		3'b100: ReadPartDataM[7:0] = ReadData[7:0]; //LB
+		3'b100: begin
+				  ReadPartDataM[7:0] = ReadDataM[7:0]; //LB
 				  ReadPartDataM[DATA_WIDTH-1:8] = 0;
-		3'b101: ReadPartDataM[HalfWord-1:0] =  ReadDataM[HalfWord-1:0]; //LHU
-				  ReadPartDataM[DATA_WIDTH-1:HalfWord] = 0;
-		default: ReadPartDataM = 1'x;
+				  end
+		3'b101: begin
+				  ReadPartDataM[(DATA_WIDTH/2)-1:0] =  ReadDataM[(DATA_WIDTH/2)-1:0]; //LHU
+				  ReadPartDataM[DATA_WIDTH-1:(DATA_WIDTH/2)] = 0;
+				  end
+		default: ReadPartDataM = 1'bx;
 		endcase
 	end
 endmodule
