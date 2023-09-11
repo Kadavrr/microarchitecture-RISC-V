@@ -2,7 +2,7 @@ module ALU #(
 	parameter A_WIDTH = 32)
 	
 (	input logic [3:0] ALUControl,
-	input logic signed [A_WIDTH-1:0] A, B,
+	input logic [A_WIDTH-1:0] A, B,
 	output logic [A_WIDTH-1:0] Result, 
 	output logic [3:0] Flags);
 	
@@ -13,14 +13,14 @@ module ALU #(
 		4'b0001: Result = A - B;//SUB
 		4'b0010: Result = A && B; //AND
 		4'b0011: Result = A || B;//OR
-		4'b0101: Result = A < B; //SLT
+		4'b0101: Result = $signed(A) < $signed(B); //SLT
 		4'b0110: Result = A << B; //SLL
 		4'b0111: Result = A >> B; //SRL
 		4'b1000: Result = A ^ B; //XOR
-		4'b1001: Result = unsigned(A) < unsigned(B); //SLTU
+		4'b1001: Result = A < B; //SLTU
 		4'b1010: Result = A <<< B; //SRA
 		4'b1011: Result = B << 12;//LUI
-		4'b1100: Result = A (B << 12); //AUIPC
+		4'b1100: Result = A + (B << 12); //AUIPC
 		default: Result = 4'bxxx;
 	endcase
 	

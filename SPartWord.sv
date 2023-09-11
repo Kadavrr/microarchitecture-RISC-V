@@ -8,12 +8,16 @@ module SPartWord#(
 	always_comb begin
 	integer HalfWord = DATA_WIDTH/2;
 	case (StoreSrcM)
-		2'b10: WritePartDataM[HalfWord-1:0] =  WriteDataM[HalfWord-1:0]; //SH
-				 WritePartDataM[DATA_WIDTH-1:HalfWord] = 0;
-		2'b01: WritePartDataM[7:0] = WriteData[7:0]; //SB
+		2'b10: begin
+				 WritePartDataM[(DATA_WIDTH/2)-1:0] =  WriteDataM[(DATA_WIDTH/2)-1:0]; //SH
+				 WritePartDataM[DATA_WIDTH-1:(DATA_WIDTH/2)] = 0;
+				 end
+		2'b01: begin
+				 WritePartDataM[7:0] = WriteDataM[7:0]; //SB
 				 WritePartDataM[DATA_WIDTH-1:8] = 0;
+				 end
 		2'b00: WritePartDataM = WriteDataM; //SW
-		default: WritePartDataM = 1'x;
+		default: WritePartDataM = 1'bx;
 		endcase
 	end
 endmodule
