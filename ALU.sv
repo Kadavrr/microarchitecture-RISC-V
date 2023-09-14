@@ -1,9 +1,7 @@
-module ALU #(
-	parameter A_WIDTH = 32)
-	
-(	input logic [3:0] ALUControl,
-	input logic [A_WIDTH-1:0] A, B,
-	output logic [A_WIDTH-1:0] Result, 
+module ALU(	
+	input logic [3:0] ALUControl,
+	input logic [31:0] A, B,
+	output logic [31:0] Result, 
 	output logic [3:0] Flags);
 	
 	always_comb begin
@@ -26,10 +24,11 @@ module ALU #(
 	
 	Zero = ~&Result;
 	
-	Negative = Result[A_WIDTH-1];
+	Negative = Result[31];
 	
 	if ((A>0 && B>0 && A+B<0) || (A<0 && B<0 && A+B>0)) Overflow = 1'b1; //((A>0 && A+B<0) || (A<0 && A+B>0)) && (A * B >= 0)
 		else Overflow = 0;
+	
 	
 	if (Result>32'hFFFFFFFF) Carry = 1'b1;
 		else Carry = 1'b0;

@@ -2,8 +2,10 @@ module ControlUnit
 (	input logic [6:0] op,
 	input logic [14:12] funct3, 
 	input logic [31:25] funct7,
-	output logic RegWriteD, ResultSrcD, MemWriteD,
-	output logic JumpD, BranchD, ALUSrcD, ImmSrcD,
+	output logic RegWriteD, MemWriteD,
+	output logic [2:0] ResultSrcD,
+	output logic JumpD, BranchD, ALUSrcD,
+	output logic [2:0] ImmSrcD,
 	output logic [3:0] ALUControlD, 
 	output logic [1:0] StoreSrcD, 
 	output logic [2:0] TypeBranchD,
@@ -11,8 +13,8 @@ module ControlUnit
 	output logic ALUSrcAD, SumSrcD);
 	//DataSrcD is needed to indicate a part of the word
 	
-	wire [16:0] AllCantrolSignals;
-	assign AllControlSignals = {RegWriteD, ResultSrcD, MemWriteD, JumpD, BranchD, ALUControlD[2:0], ALUSrcD, ImmSrcD, 
+	wire [16:0] AllControlSignals;
+	assign AllControlSignals = {RegWriteD, ResultSrcD[2:0], MemWriteD, JumpD, BranchD, ALUControlD[2:0], ALUSrcD, ImmSrcD, 
 								StoreSrcD[1:0], TypeBranchD[2:0] , LoadPartD[2:0] , ALUSrcAD, SumSrcD};
 	always_comb
 	
@@ -39,12 +41,12 @@ module ControlUnit
 										3'b101: ALUControlD = 4'b0111; //SRL
 										3'b110: ALUControlD = 4'b0011; //OR
 										3'b111: ALUControlD = 4'b0010; //AND
-										default: AllControlSignals = 17'bx;
+										default: AllControlSignals = 19'bx;
 										endcase
 							7'b0100000: case(funct3)
 											   3'b000: ALUControlD = 4'b0001; //SUB
 												3'b101: ALUControlD = 4'b1010; //SRA
-												default: AllControlSignals = 17'bx;
+												default: AllControlSignals = 19'bx;
 											endcase
 							endcase
 						end
@@ -69,11 +71,11 @@ module ControlUnit
 							3'b101: case(funct7)
 										  7'b0100000: ALUControlD = 4'b1010; //SRAI
 										  7'b0000000: ALUControlD = 4'b0111; //SRLI
-										  default: AllControlSignals = 17'bx;
+										  default: AllControlSignals = 19'bx;
 									  endcase
 							3'b110: ALUControlD = 4'b0011; //ORI
 							3'b111: ALUControlD = 4'b0010; //ANDI
-							default: AllControlSignals = 17'bx;
+							default: AllControlSignals = 19'bx;
 							endcase
 						end
 		7'b0100011: begin
@@ -92,7 +94,7 @@ module ControlUnit
 					      3'b000: StoreSrcD = 2'b10; //SB
 						   3'b001: StoreSrcD = 2'b01;//SH
 						   3'b010: StoreSrcD = 2'b00;//SW
-						   default: AllControlSignals = 17'bx;
+						   default: AllControlSignals = 19'bx;
 					   endcase
 						end
 		7'b1100011: begin
@@ -154,7 +156,7 @@ module ControlUnit
 							3'b010: LoadPartD = 3'b010; //LW
 							3'b100: LoadPartD = 3'b100; //LBU
 							3'b101: LoadPartD = 3'b101; //LHU
-							default: AllControlSignals = 17'bx;
+							default: AllControlSignals = 19'bx;
 						endcase
 						end
 		7'b0110111: begin
@@ -216,7 +218,7 @@ module ControlUnit
 						LoadPartD = 3'b000;
 						SumSrcD = 1;
 						end
-		default: AllControlSignals = 17'bx; //all control signals must be X
+		default: AllControlSignals = 19'bx; //all control signals must be X
 		endcase
 					
 						

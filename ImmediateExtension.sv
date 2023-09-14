@@ -1,5 +1,5 @@
 module ImmediateExtension(
-	input logic SrcExt,
+	input logic [2:0] SrcExt,
 	input logic [31:7] Imm, 
 	output logic [31:0] ImmExt);
 	

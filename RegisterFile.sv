@@ -12,7 +12,7 @@ module RegisterFile #(
 	
 logic [DATA_WIDTH-1:0] memory [2**ADDR_WIDTH];
 
-always_ff @ (posedge clk) begin
+always_ff @ (negedge clk) begin
 	if (WE3) begin
 		memory[ADDR3] <= WD3;
 		end
