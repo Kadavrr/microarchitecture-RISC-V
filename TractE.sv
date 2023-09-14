@@ -5,8 +5,9 @@ module TractE(
 	input logic [3:0] ALUControlE, 
 	input logic [1:0] StoreSrcE, 
 	input logic [2:0] TypeBranchE,
-	input logic [2:0] LoadPartE,
-	input logic ALUSrcAE, SumSrcE, 
+	input logic [2:0] LoadPartE1,
+	input logic ALUSrcAE, 
+	input logic [2:0] SumSrcE1, 
 	input logic Rs1E1, Rs2E1,
 	input logic [31:0] PCPlus4E1,
 	input logic [31:0] PCE,
@@ -22,15 +23,19 @@ module TractE(
 	output logic PCPlus4E,
 	output logic PCSrcE, Rs2E, Rs1E,
 	output logic MemWriteE,
+	output logic [2:0] StoreSrcE,
+	output logic [2:0] LoadSrcE,
 	output logic [31:0] PCTargetE
 	);
 	
-	always_comb begin
 	logic NeedBranchE;
 	logic [3:0] Flags;
 	logic [31:0] SrcAE;
 	logic [31:0] SrcBE;
 	logic [31:0] PreSrcBE;
+	logic ZeroE;
+	
+	always_comb begin
 	
 	RegWriteE = RegWriteE1;
 	ResultSrcE = ResultSrcE1;
@@ -41,6 +46,9 @@ module TractE(
 	RdE = RdE1;
 	Rs1E = Rs1E1; 
 	Rs2E = Rs2E1;
+	ZeroE = Flags[2];
+	StoreSrcE = StoreSrcE1;
+	LoadSrcE = LoadSrcE1;
 	
 	case (ForwardAE)
 		2'b00: SrcAE = Rd1E;
