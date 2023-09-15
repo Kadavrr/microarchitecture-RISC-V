@@ -1,5 +1,5 @@
 module TractM(
-	input logic RegWriteM1, MemWriteM1,
+	input logic RegWriteM1, MemWriteM,
 	input logic [1:0] ResultSrcM1,
 	input logic [31:0] ALUResultM,
 	input logic [31:0] WriteDataM,
@@ -8,10 +8,9 @@ module TractM(
 	input logic [2:0] StoreSrcM,
 	input logic [2:0] LoadSrcM,
 	output logic [31:0] ReadPartDataM,
-	output logic RdM,
-	output logic [31:0] ALUResultM
+	output logic RdM
 	);
-	logic [31:0] ReadDataM1;
+	logic [31:0] ReadDataM;
 	logic [31:0] WritePartDataM;
 	
 	DataMemory #(.ADDR_WIDTH(5), .DATA_WIDTH(32)) dm (.ADDR1(ALUResultM),

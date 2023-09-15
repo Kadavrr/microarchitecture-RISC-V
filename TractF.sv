@@ -22,6 +22,7 @@ module TractF(
 	PCPlus4F = PCF + 4;
 	PCD = PCPlus4F;
 	end
+	
 	InstructionsMemory #(.ADDR_WIDTH(5), .DATA_WIDTH(32)) InstrMem (.ADDR(PCF), 
 																						 .WD(WD), 
 																						 .RD(InstrF));											
