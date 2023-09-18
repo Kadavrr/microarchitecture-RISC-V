@@ -6,17 +6,16 @@ module LPartWord#(
 	output logic [DATA_WIDTH-1:0] ReadPartDataM); 
 	
 	always_comb begin
-	integer HalfWord = DATA_WIDTH/2;
 	case (LoadSrcM)
 		3'b001: begin
 				  ReadPartDataM[(DATA_WIDTH/2)-1:0] =  ReadDataM[(DATA_WIDTH/2)-1:0]; //LH
-				  ReadPartDataM[DATA_WIDTH-1:(DATA_WIDTH/2)] = ReadDataM[DATA_WIDTH];
+				  ReadPartDataM[DATA_WIDTH-1:(DATA_WIDTH/2)] = ReadDataM[DATA_WIDTH-1];
 				  end
 		3'b000: begin
 				  ReadPartDataM[7:0] = ReadDataM[7:0]; //LB
-				  ReadPartDataM[DATA_WIDTH-1:8] = ReadDataM[DATA_WIDTH];
+				  ReadPartDataM[DATA_WIDTH-1:8] = ReadDataM[DATA_WIDTH-1];
 				  end
-		3'b000: ReadPartDataM = ReadDataM; //LW
+		3'b010: ReadPartDataM = ReadDataM; //LW
 		3'b100: begin
 				  ReadPartDataM[7:0] = ReadDataM[7:0]; //LB
 				  ReadPartDataM[DATA_WIDTH-1:8] = 0;

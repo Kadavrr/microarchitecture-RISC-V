@@ -5,26 +5,25 @@ module BranchUnit(
 		input logic ALUResultE,
 		output logic NeedBranchE);
 		
-		always_comb begin
 		logic ConditionIsMet;
+		always_comb
 		case (TypeBranchE)
-			3'b000: if(ZeroE == 1) NeedBranchE = 1;
-						else NeedBranchE = 0;
-			3'b001:if(ZeroE == 0) NeedBranchE = 1;
-						else NeedBranchE = 0;
-			3'b100:if(ALUResultE == 1) NeedBranchE = 1;
-						else NeedBranchE = 0;
-			3'b101:if(ALUResultE == 0) NeedBranchE = 1;
-						else NeedBranchE = 0;
-			3'b110:if(ALUResultE == 1) NeedBranchE = 1;
-						else NeedBranchE = 0;
-			3'b111:if(ALUResultE == 0) NeedBranchE = 1;
-						else NeedBranchE = 0;
-			default: NeedBranchE = 1'bx;
+			3'b000: if(ZeroE == 1) ConditionIsMet = 1;
+						else ConditionIsMet = 0;
+			3'b001:if(ZeroE == 0) ConditionIsMet = 1;
+						else ConditionIsMet = 0;
+			3'b100:if(ALUResultE == 1) ConditionIsMet = 1;
+						else ConditionIsMet = 0;
+			3'b101:if(ALUResultE == 0) ConditionIsMet = 1;
+						else ConditionIsMet = 0;
+			3'b110:if(ALUResultE == 1) ConditionIsMet = 1;
+						else ConditionIsMet = 0;
+			3'b111:if(ALUResultE == 0) ConditionIsMet = 1;
+						else ConditionIsMet = 0;
+			default: ConditionIsMet = 1'bx;
 		
 		endcase
-		AND(NeedBranchE, ConditionIsMet, BranchE);
-		end
+		and(NeedBranchE, ConditionIsMet, BranchE);
 	
 		
 			

@@ -65,4 +65,5 @@ set_global_assignment -name SYSTEMVERILOG_FILE TractD.sv
 set_global_assignment -name SYSTEMVERILOG_FILE TractE.sv
 set_global_assignment -name SYSTEMVERILOG_FILE TractM.sv
 set_global_assignment -name SYSTEMVERILOG_FILE TractW.sv
+set_global_assignment -name SYSTEMVERILOG_FILE RISCVConv.sv
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -7,7 +7,7 @@ module RegisterFile #(
 	input logic [ADDR_WIDTH-1:0] ADDR4, ADDR5, ADDR6,
 	input logic [DATA_WIDTH-1:0] WD3, WD6,
 	input logic clk,
-	inout logic WE3, WE6,
+	input logic WE3, WE6,
 	output logic [DATA_WIDTH-1:0] RD1, RD2, RD4, RD5);
 	
 logic [DATA_WIDTH-1:0] memory [2**ADDR_WIDTH];

@@ -6,7 +6,6 @@ module SPartWord#(
 	output logic [DATA_WIDTH-1:0] WritePartDataM); 
 	
 	always_comb begin
-	integer HalfWord = DATA_WIDTH/2;
 	case (StoreSrcM)
 		2'b10: begin
 				 WritePartDataM[(DATA_WIDTH/2)-1:0] =  WriteDataM[(DATA_WIDTH/2)-1:0]; //SH

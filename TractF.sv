@@ -13,7 +13,7 @@ module TractF(
 	logic [31:0] PCF;
 	assign PrePCF = PCSrcE ? PCTargetE : PCPlus4F;
 	
-	always_ff @(posedge clk or StallF) begin
+	always_ff @(posedge clk) begin
 		if (~StallF == 1) 
 			PCF <= PrePCF;
 	end

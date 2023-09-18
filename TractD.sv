@@ -1,23 +1,23 @@
 module TractD(
 	input logic [31:0] InstrD,
-	input logic [31:0] PCPlus4F,
+	input logic [31:0] PCPlus4D1,
 	input logic [31:0] PCF,
 	input logic [31:0] ResultW,
-	input logic RdW,
-	input logic RegWriteW,
+	input logic RdW, clk, RegWriteW,
+	output logic [31:0] RD1D, RD2D,
 	output logic RegWriteD, MemWriteD,
-	output logic [2:0] ResultSrcD,
+	output logic [1:0] ResultSrcD,
 	output logic JumpD, BranchD, ALUSrcD,
 	output logic [3:0] ALUControlD, 
 	output logic [1:0] StoreSrcD, 
 	output logic [2:0] TypeBranchD,
-	output logic [2:0] LoadPartD,
+	output logic [2:0] LoadSrcD,
 	output logic ALUSrcAD, SumSrcD,
-	output logic Rs1D, Rs2D,
+	output logic [4:0] Rs1D, Rs2D, RdD,
 	output logic [31:0] PCPlus4D,
 	output logic [31:0] PCD,
 	output logic [31:0] ImmExtD,
-	output logic RdD
+	output logic ControlSignal
 	);
 	
 	logic [2:0] ImmSrcD;
@@ -34,12 +34,22 @@ module TractD(
 						.ALUControlD(ALUControlD),
 						.StoreSrcD(StoreSrcD),
 						.TypeBranchD(TypeBranchD),
-						.LoadPartD(LoadPartD),
+						.LoadSrcD(LoadSrcD),
 						.ALUSrcAD(ALUSrcAD),
-						.SumSrcD(SumSrcD));
+						.SumSrcD(SumSrcD),
+						.ControlSignal(ControlSignal));
 	
-	assign PCPlus4D = PCPlus4F;
+	assign PCPlus4D = PCPlus4D1;
 	assign PCD = PCF;
+	
+	RegisterFile #(.ADDR_WIDTH(5), .DATA_WIDTH(32)) regfile(.ADDR1(InstrD[19:15]),
+																			  .ADDR2(InstrD[24:20]),
+																			  .ADDR3(RdW),
+																			  .WD3(ResultW),
+																			  .WE3(RegWriteW),
+																			  .clk(clk),
+																			  .RD1(RD1D),
+																			  .RD2(RD2D));
 	
 	
 	ImmediateExtension ie(.SrcExt(),

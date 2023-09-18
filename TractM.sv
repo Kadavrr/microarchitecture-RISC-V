@@ -3,12 +3,16 @@ module TractM(
 	input logic [1:0] ResultSrcM1,
 	input logic [31:0] ALUResultM,
 	input logic [31:0] WriteDataM,
-	input logic RdM1, clk,
+	input logic [31:0] RdM1,
+	input logic clk,
 	input logic [31:0] PCPlus4M1,
 	input logic [2:0] StoreSrcM,
 	input logic [2:0] LoadSrcM,
-	output logic [31:0] ReadPartDataM,
-	output logic RdM
+	output logic [31:0] ReadPartDataM, PCPlus4M,
+	output logic [1:0] ResultSrcM,
+	output logic [31:0] RdM,
+	output logic RegWriteM,
+	output [31:0] ALUResultMW
 	);
 	logic [31:0] ReadDataM;
 	logic [31:0] WritePartDataM;
@@ -25,8 +29,14 @@ module TractM(
 	LPartWord #(.DATA_WIDTH(32)) lpw(.LoadSrcM(LoadSrcM),
 												.ReadDataM(ReadDataM),
 												.ReadPartDataM(ReadPartDataM));
-	
-	
+												
+	always_comb begin
+	PCPlus4M = PCPlus4M1;											
+	ALUResultMW =ALUResultM;
+	ResultSrcM = ResultSrcM1;
+	RegWriteM = RegWriteM1;
+	RdM = RdM1;
+	end
 	
 	
 endmodule
