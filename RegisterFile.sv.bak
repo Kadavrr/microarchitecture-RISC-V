@@ -1,5 +1,0 @@
-module RegisterFile(
-	input logic A1, A2, A3,
-	input logic A4, A5, A6,
-	input logic WD3, WD6,
-	output logic RD1, RD2, RD4, RD5)

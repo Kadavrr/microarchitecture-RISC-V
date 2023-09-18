@@ -1,5 +1,0 @@
-module DataMemory(
-	input logic A1, A2,
-	input logic WD1, WD2,
-	output logic RD1, RD2)
-	
