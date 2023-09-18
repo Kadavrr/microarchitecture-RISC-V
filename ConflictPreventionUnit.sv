@@ -1,7 +1,9 @@
 module ConflictPreventionUnit(
-	input logic Rs1D, Rs2D, Rs1E, Rs2E, PCSrcE,
+	input logic [4:0] Rs1D, Rs2D, Rs1E, Rs2E,
+	input logic PCSrcE,
 	input logic ResultSrcE0,
-	input RdE, RdM, RdW, RegWriteW, RegWriteM,
+	input logic [4:0] RdE, RdM, RdW,
+	input logic RegWriteW, RegWriteM,
 	output logic StallF, StallD, FlushD, FlushE,
 	output logic [1:0] ForwardAE, ForwardBE);
 	
