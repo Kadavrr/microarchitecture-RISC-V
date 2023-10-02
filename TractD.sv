@@ -1,12 +1,15 @@
+`ifndef TRACTD
+`define TRACTD
 `include "ImmediateExtension.sv"
 `include "RegisterFile.sv"
 `include "ControlUnit.sv"
 module TractD(
 	input logic [31:0] InstrD,
 	input logic [31:0] PCPlus4D1,
-	input logic [31:0] PCF,
+	input logic [31:0] PCD1,
 	input logic [31:0] ResultW,
-	input logic RdW, clk, RegWriteW,
+	input logic [4:0] RdW,
+   input logic	clk, RegWriteW,
 	output logic [31:0] RD1D, RD2D,
 	output logic RegWriteD, MemWriteD,
 	output logic [1:0] ResultSrcD,
@@ -43,7 +46,7 @@ module TractD(
 						.ControlSignal(ControlSignal));
 	
 	assign PCPlus4D = PCPlus4D1;
-	assign PCD = PCF;
+	assign PCD = PCD1;
 	
 	RegisterFile #(.ADDR_WIDTH(5), .DATA_WIDTH(32)) regfile(.ADDR1(InstrD[19:15]),
 																			  .ADDR2(InstrD[24:20]),
@@ -67,3 +70,4 @@ module TractD(
 						
 	
 endmodule
+`endif 

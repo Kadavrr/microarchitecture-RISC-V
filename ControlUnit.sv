@@ -1,3 +1,5 @@
+`ifndef CONTUNIT
+`define CONTUNIT
 module ControlUnit
 (	input logic [6:0] op,
 	input logic [14:12] funct3, 
@@ -355,3 +357,4 @@ module ControlUnit
 					
 						
 endmodule
+`endif

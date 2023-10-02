@@ -1,3 +1,5 @@
+`ifndef IMMEXT
+`define IMMEXT
 module ImmediateExtension(
 	input logic [2:0] SrcExt,
 	input logic [31:7] Imm, 
@@ -33,3 +35,4 @@ always_comb begin
 end
 
 endmodule
+`endif

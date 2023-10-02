@@ -1,3 +1,5 @@
+`ifndef INSTRMEM
+`define INSTRMEM
 module InstructionsMemory#(
 	parameter ADDR_WIDTH = 5,
 	parameter DATA_WIDTH = 32)
@@ -14,3 +16,4 @@ always_ff @ (posedge clk) begin
 end
 assign RD = memory[ADDR];
 endmodule
+`endif

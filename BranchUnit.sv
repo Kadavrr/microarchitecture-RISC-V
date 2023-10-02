@@ -1,3 +1,5 @@
+`ifndef BRANUNIT
+`define BRANUNIT
 module BranchUnit(
 		input logic [2:0] TypeBranchE,
 		input logic BranchE,
@@ -29,3 +31,4 @@ module BranchUnit(
 			
 		
 endmodule
+`endif

@@ -1,3 +1,5 @@
+`ifndef CONFUNIT
+`define CONFUNIT
 module ConflictPreventionUnit(
 	input logic [4:0] Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW,
 	input logic PCSrcE,
@@ -28,5 +30,5 @@ module ConflictPreventionUnit(
 	FlushE = lwStall | PCSrcE;
 	end
 	
-	endmodule
-	
+endmodule
+`endif	

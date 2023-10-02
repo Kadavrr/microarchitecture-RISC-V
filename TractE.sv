@@ -1,3 +1,5 @@
+`ifndef TRACTE
+`define TRACTE
 `include "ALU.sv"
 `include "BranchUnit.sv"
 module TractE( 
@@ -9,21 +11,24 @@ module TractE(
 	input logic [2:0] TypeBranchE,
 	input logic ALUSrcAE, 
 	input logic [2:0] SumSrcE, 
-	input logic [1:0] LoadSrcE1,
-	input logic Rs1E1, Rs2E1,
+	input logic [2:0] LoadSrcE1,
+	input logic [4:0] Rs1E1, Rs2E1,
 	input logic [31:0] PCPlus4E1,
 	input logic [31:0] PCE,
 	input logic [31:0] ImmExtE,
 	input logic [31:0] ResultW,
 	input logic [31:0] ALUResultM,
-	input logic RD1E, RD2E, RdE1,
+	input logic [31:0] RD1E, RD2E,
+	input logic [4:0] RdE1, 
 	input logic [1:0] ForwardAE, ForwardBE,
-	output logic RegWriteE, RdE,
+	output logic RegWriteE,
+	output logic [4:0] RdE,
 	output logic [2:0] ResultSrcE,
 	output logic [31:0] ALUResultE,
 	output logic [31:0] WriteDataE,
 	output logic [31:0] PCPlus4E,
-	output logic PCSrcE, Rs2E, Rs1E,
+	output logic PCSrcE,
+	output logic [4:0] Rs2E, Rs1E,
 	output logic MemWriteE,
 	output logic [2:0] StoreSrcE,
 	output logic [2:0] LoadSrcE,
@@ -89,3 +94,4 @@ module TractE(
 	
 	 
 endmodule
+`endif 

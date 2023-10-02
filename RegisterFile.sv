@@ -1,3 +1,5 @@
+`ifndef REGFILE
+`define REGFILE
 module RegisterFile #(
 	parameter ADDR_WIDTH = 5,
 	parameter DATA_WIDTH = 32)
@@ -36,4 +38,5 @@ assign RD2 = read_data2;
 assign RD4 = read_data4;
 assign RD5 = read_data5;
 
-endmodule	
+endmodule
+`endif	

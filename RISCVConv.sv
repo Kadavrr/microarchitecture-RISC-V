@@ -1,3 +1,5 @@
+`ifndef RISCVCONV
+`define RISCVCONV
 `include "Tract.sv"
 `include "ConflictPreventionUnit.sv"
 module RISCVConv(
@@ -51,3 +53,4 @@ module RISCVConv(
 											 .ForwardBE(ForwardBE));
 	
 endmodule
+`endif 

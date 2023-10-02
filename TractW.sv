@@ -1,10 +1,13 @@
+`ifndef TRACTW
+`define TRACTW
 module TractW(
 	input logic RegWriteW1, RdW1,
 	input logic [1:0] ResultSrcW,
 	input logic [31:0] ALUResultW,
 	input logic [31:0] ReadPartDataW,
 	input logic [31:0] PCPlus4W,
-	output logic RegWriteW, RdW,
+	output logic RegWriteW,
+	output logic [4:0] RdW,
 	output logic [31:0] ResultW
 	);
 	
@@ -19,3 +22,4 @@ module TractW(
 	RdW = RdW1;
 	end
 endmodule
+`endif

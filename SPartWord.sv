@@ -1,3 +1,5 @@
+`ifndef SPART
+`define SPART
 module SPartWord#(
 	parameter DATA_WIDTH = 32)
 (
@@ -20,3 +22,4 @@ module SPartWord#(
 		endcase
 	end
 endmodule
+`endif

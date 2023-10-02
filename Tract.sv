@@ -1,3 +1,5 @@
+`ifndef TRACT
+`define TRACT
 `include "TractF.sv"
 `include "TractD.sv"
 `include "TractE.sv"
@@ -18,7 +20,7 @@ module Tract(
 	logic [31:0] PCTargetE;
 	logic [31:0] InstrF;
 	logic [31:0] PCPlus4F;
-	logic [31:0] PCD;
+	logic [31:0] PCF;
 	
 	TractF tractf (.PCTargetE(PCTargetE),
 						.PCSrcE(PCSrcE),
@@ -27,25 +29,25 @@ module Tract(
 						.WD(WD),
 						.InstrF(InstrF),
 						.PCPlus4F(PCPlus4F),
-						.PCD(PCD));
+						.PCF(PCF));
 						
 //add signals FlushD and StallD
 	always_ff @(posedge clk or posedge FlushD) begin
 		if (FlushD) begin
-			PCD <= 0;
-			PCPlus4D <= 0;
+			PCD1 <= 0;
+			PCPlus4D1 <= 0;
 			InstrD <= 0;
 		end
 		else if (~StallD) begin
-			PCD <= PCF;
-			PCPlus4D <= PCPlus4F;
+			PCD1 <= PCF;
+			PCPlus4D1 <= PCPlus4F;
 			InstrD <= InstrF;
 		end
 	end
 						
 	logic [31:0] InstrD;
 	logic [31:0] PCPlus4D1;
-	logic [31:0] PCF;
+	logic [31:0] PCD, PCD1;
 	logic [31:0] ResultW;
 	logic RegWriteD, MemWriteD;
 	logic [1:0] ResultSrcD;
@@ -62,7 +64,7 @@ module Tract(
 	
 	TractD tractd (.InstrD(InstrD),
 						.PCPlus4D1(PCPlus4D1),
-						.PCF(PCF),
+						.PCD1(PCD1),
 						.ResultW(ResultW),
 						.RdW(RdW),
 						.RegWriteW(RegWriteW),
@@ -91,9 +93,9 @@ module Tract(
 						
 		always_ff @(posedge clk or posedge FlushE) begin
 		if (FlushE) begin
-			RegWriteE <= 0;
-			MemWriteE <= 0;
-			ResultSrcE <= 0;
+			RegWriteE1 <= 0;
+			MemWriteE1 <= 0;
+			ResultSrcE1 <= 0;
 			JumpE <= 0;
 			BranchE <= 0;
 			ALUControlE <= 0;
@@ -103,19 +105,19 @@ module Tract(
 			RD1E <= 0;
 			RD2E <= 0;
 			PCE <= 0;
-			Rs1E <= 0;
-			Rs2E <= 0;
-			RdE <= 0;
+			Rs1E1 <= 0;
+			Rs2E1 <= 0;
+			RdE1 <= 0;
 			ImmExtE <= 0;
-			PCPlus4E <= 0;
+			PCPlus4E1 <= 0;
 			TypeBranchE <= 0;
-			StoreSrcE <= 0;
-			LoadSrcE <= 0;
+			StoreSrcE1 <= 0;
+			LoadSrcE1 <= 0;
 		end
 		else begin
-			RegWriteE <= RegWriteD;
-			MemWriteE <= MemWriteD;
-			ResultSrcE <= ResultSrcD;
+			RegWriteE1 <= RegWriteD;
+			MemWriteE1 <= MemWriteD;
+			ResultSrcE1 <= ResultSrcD;
 			JumpE <= JumpD;
 			BranchE <= BranchD;
 			ALUControlE <= ALUControlD;
@@ -125,14 +127,14 @@ module Tract(
 			RD1E <= RD1D;
 			RD2E <= RD2D;
 			PCE <= PCD;
-			Rs1E <= Rs1D;
-			Rs2E <=Rs2D;
-			RdE <= RdD;
+			Rs1E1 <= Rs1D;
+			Rs2E1 <=Rs2D;
+			RdE1 <= RdD;
 			ImmExtE <= ImmExtD;
-			PCPlus4E <= PCPlus4D;
+			PCPlus4E1 <= PCPlus4D;
 			TypeBranchE <= TypeBranchD;
-			StoreSrcE <= StoreSrcD;
-			LoadSrcE <= LoadSrcD;
+			StoreSrcE1 <= StoreSrcD;
+			LoadSrcE1 <= LoadSrcD;
 		end
 			
 	end
@@ -143,7 +145,7 @@ module Tract(
 	logic [3:0] ALUControlE;
 	logic [1:0] StoreSrcE1;
 	logic [2:0] LoadSrcE1, TypeBranchE;
-	logic Rs1E1, Rs2E1;
+	logic [4:0] Rs1E1, Rs2E1;
 	logic [2:0] SumSrcE;
 	logic [31:0] PCPlus4E1, PCE, ImmExtE, ALUResultE;
 	logic [31:0] RD1E, RD2E;
@@ -203,15 +205,16 @@ module Tract(
 		LoadSrcM <= LoadSrcE;
 		RegWriteM1 <= RegWriteE;
 		MemWriteM <= MemWriteE;
-		ResultSrcM <= ResultSrcE;
+		ResultSrcM1 <= ResultSrcE;
 		ALUResultM <= ALUResultE;
 		WriteDataM <= WriteDataE;
-		RdM <= RdE;
-		PCPlus4M <= PCPlus4E;
+		RdM1 <= RdE;
+		PCPlus4M1 <= PCPlus4E;
 	end
 		
 						
 	logic RegWriteM1, MemWriteM;
+	logic [4:0] RdM1;
 	logic [1:0] ResultSrcM1;
 	logic [31:0] WriteDataM, PCPlus4M1, PCPlus4M;
 	logic [31:0] ReadPartDataM, ALUResultMW;
@@ -221,6 +224,7 @@ module Tract(
 	TractM tractm (.RegWriteM1(RegWriteM1),
 						.MemWriteM(MemWriteM),
 						.ResultSrcM1(ResultSrcM1),
+						.RdM1(RdM1),
 						.ALUResultM(ALUResultM),
 						.WriteDataM(WriteDataM),
 						.clk(clk),
@@ -231,18 +235,20 @@ module Tract(
 						.RdM(RdM),
 						.ALUResultMW(ALUResultMW),
 						.ResultSrcM(ResultSrcM),
-						.RegWriteM(RegWriteM));
+						.RegWriteM(RegWriteM),
+						.PCPlus4M(PCPlus4M));
 						
 	always_ff @(posedge clk) begin
-	RegWriteW <= RegWriteM;
+	RegWriteW1 <= RegWriteM;
 	ResultSrcW <= ResultSrcM;
 	ReadPartDataW <= ReadPartDataM;
 	ALUResultW <= ALUResultMW;
-	RdW <= RdM;
+	RdW1 <= RdM;
 	PCPlus4W <= PCPlus4M;
 	end
 						
-	logic RegWriteW1, RdW1;
+	logic RegWriteW1;
+	logic [4:0] RdW1;
 	logic [1:0] ResultSrcW;
 	logic [31:0] ALUResultW, ReadPartDataW, PCPlus4W;
 	
@@ -257,3 +263,4 @@ module Tract(
 						.ResultW(ResultW));
 	
 endmodule
+`endif 

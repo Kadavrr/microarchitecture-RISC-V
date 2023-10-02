@@ -1,3 +1,5 @@
+`ifndef ALU
+`define ALU
 module ALU(	
 	input logic [3:0] ALUControl,
 	input logic [31:0] A, B,
@@ -39,3 +41,4 @@ module ALU(
 	end 
  
 endmodule
+`endif

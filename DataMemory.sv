@@ -1,3 +1,5 @@
+`ifndef DATAMEM
+`define DATAMEM
 module DataMemory#(
 	parameter ADDR_WIDTH = 5,
 	parameter DATA_WIDTH = 32)
@@ -21,3 +23,4 @@ always_comb begin
 end
 	
 endmodule
+`endif

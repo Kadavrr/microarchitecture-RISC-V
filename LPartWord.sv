@@ -1,3 +1,5 @@
+`ifndef LPART
+`define LPART
 module LPartWord#(
 	parameter DATA_WIDTH = 32)
 (
@@ -28,3 +30,4 @@ module LPartWord#(
 		endcase
 	end
 endmodule
+`endif
