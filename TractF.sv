@@ -1,3 +1,4 @@
+`include "InstructionsMemory.sv" 
 module TractF(
 	input logic [31:0] PCTargetE, 
 	input logic PCSrcE, 

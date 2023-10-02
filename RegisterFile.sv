@@ -16,10 +16,10 @@ logic [DATA_WIDTH-1:0] read_data4;
 logic [DATA_WIDTH-1:0] read_data5;
 
 always_ff @(posedge clk) begin
-	read_data1 <= memory[ADDR1]
-	read_data2 <= memory[ADDR2]
-	read_data4 <= memory[ADDR4]
-	read_data5 <= memory[ADDR5]
+	read_data1 <= memory[ADDR1];
+	read_data2 <= memory[ADDR2];
+	read_data4 <= memory[ADDR4];
+	read_data5 <= memory[ADDR5];
 	end
 
 always_ff @ (negedge clk) begin

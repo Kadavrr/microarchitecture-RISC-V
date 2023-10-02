@@ -1,3 +1,5 @@
+`include "ALU.sv"
+`include "BranchUnit.sv"
 module TractE( 
 	input logic RegWriteE1, MemWriteE1,
 	input logic [2:0] ResultSrcE1,

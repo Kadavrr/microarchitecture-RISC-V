@@ -1,3 +1,4 @@
+`include "RISCVConv.sv"
 module DUT(
 	input clk,
 	input [31:0] WD);

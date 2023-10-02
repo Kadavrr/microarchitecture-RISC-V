@@ -1,3 +1,9 @@
+`include "TractF.sv"
+`include "TractD.sv"
+`include "TractE.sv"
+`include "TractF.sv"
+`include "TractM.sv"
+`include "TractW.sv"
 module Tract(
 	input logic clk,
 	input logic [31:0] WD,

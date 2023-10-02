@@ -1,3 +1,6 @@
+`include "DataMemory.sv"
+`include "SPartWord.sv"
+`include "LPartWord.sv"
 module TractM(
 	input logic RegWriteM1, MemWriteM,
 	input logic [1:0] ResultSrcM1,

@@ -1,3 +1,6 @@
+`include "ImmediateExtension.sv"
+`include "RegisterFile.sv"
+`include "ControlUnit.sv"
 module TractD(
 	input logic [31:0] InstrD,
 	input logic [31:0] PCPlus4D1,

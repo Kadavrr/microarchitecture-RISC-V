@@ -1,3 +1,5 @@
+`include "Tract.sv"
+`include "ConflictPreventionUnit.sv"
 module RISCVConv(
 	input logic clk,
 	input logic [31:0] WD,
