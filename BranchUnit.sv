@@ -4,7 +4,7 @@ module BranchUnit(
 		input logic [2:0] TypeBranchE,
 		input logic BranchE,
 		input logic ZeroE,
-		input logic ALUResultE,
+		input logic [31:0] ALUResultE,
 		output logic NeedBranchE);
 		
 		logic ConditionIsMet;

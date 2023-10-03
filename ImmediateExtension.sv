@@ -1,12 +1,12 @@
 `ifndef IMMEXT
 `define IMMEXT
 module ImmediateExtension(
-	input logic [2:0] SrcExt,
+	input logic [2:0] ImmSrcD,
 	input logic [31:7] Imm, 
 	output logic [31:0] ImmExt);
 	
 always_comb begin 
-	case(SrcExt)
+	case(ImmSrcD)
 		3'b001: begin
 					ImmExt[31:12] = Imm[31];
 					ImmExt[11:0] = Imm[31:20]; // I-Instructions

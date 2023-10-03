@@ -7,6 +7,7 @@ module SPartWord#(
 	input logic [DATA_WIDTH-1:0] WriteDataM,
 	output logic [DATA_WIDTH-1:0] WritePartDataM); 
 	
+	
 	always_comb begin
 	case (StoreSrcM)
 		2'b10: begin
