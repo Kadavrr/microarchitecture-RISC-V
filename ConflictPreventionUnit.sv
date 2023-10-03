@@ -2,7 +2,7 @@
 `define CONFUNIT
 module ConflictPreventionUnit(
 	input logic [4:0] Rs1D, Rs2D, Rs1E, Rs2E, RdE, RdM, RdW,
-	input logic PCSrcE,
+	input logic PCSrcE, rst,
 	input logic ResultSrcE0,
 	input logic RegWriteW, RegWriteM,
 	output logic StallF, StallD, FlushD, FlushE,
@@ -26,8 +26,14 @@ module ConflictPreventionUnit(
 	lwStall = ResultSrcE0 && ((Rs1D == RdE) | (Rs2D == RdE));
 	StallF = lwStall;
 	StallD = lwStall;
-	FlushD = PCSrcE;
-	FlushE = lwStall | PCSrcE;
+	if (rst) begin
+		FlushE = 1;
+		FlushD = 1;
+	end
+	else begin
+		FlushD = PCSrcE;
+		FlushE = lwStall | PCSrcE;
+		end
 	end
 	
 endmodule

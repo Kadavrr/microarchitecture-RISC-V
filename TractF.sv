@@ -5,7 +5,7 @@ module TractF(
 	input logic [31:0] PCTargetE, 
 	input logic PCSrcE, 
 	input logic StallF,
-	input logic clk,
+	input logic clk, rst,
 	input logic [31:0] WD,
 	output logic [31:0] InstrF,
 	output logic [31:0] PCPlus4F,
@@ -17,7 +17,9 @@ module TractF(
 	assign PrePCF = PCSrcE ? PCTargetE : PCPlus4F;
 	
 	always_ff @(posedge clk) begin
-		if (~StallF == 1) 
+		if(rst) 
+		   PCF1 <= 0;
+		else if (~StallF == 1) 
 			PCF1 <= PrePCF;
 	end
 	

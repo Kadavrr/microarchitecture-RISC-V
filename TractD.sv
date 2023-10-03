@@ -43,7 +43,8 @@ module TractD(
 						.LoadSrcD(LoadSrcD),
 						.ALUSrcAD(ALUSrcAD),
 						.SumSrcD(SumSrcD),
-						.ControlSignal(ControlSignal));
+						.ControlSignal(ControlSignal),
+						.ImmSrcD(ImmSrcD));
 	
 	assign PCPlus4D = PCPlus4D1;
 	assign PCD = PCD1;
@@ -58,7 +59,7 @@ module TractD(
 																			  .RD2(RD2D));
 	
 	
-	ImmediateExtension ie(.SrcExt(),
+	ImmediateExtension ie(.ImmSrcD(ImmSrcD),
 								 .Imm(InstrD[31:7]),
 								 .ImmExt(ImmExtD));
 	always_comb begin

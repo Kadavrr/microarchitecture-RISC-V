@@ -4,7 +4,7 @@
 `include "BranchUnit.sv"
 module TractE( 
 	input logic RegWriteE1, MemWriteE1,
-	input logic [2:0] ResultSrcE1,
+	input logic [1:0] ResultSrcE1,
 	input logic JumpE, BranchE, ALUSrcE,
 	input logic [3:0] ALUControlE, 
 	input logic [1:0] StoreSrcE1, 
@@ -23,14 +23,14 @@ module TractE(
 	input logic [1:0] ForwardAE, ForwardBE,
 	output logic RegWriteE,
 	output logic [4:0] RdE,
-	output logic [2:0] ResultSrcE,
+	output logic [1:0] ResultSrcE,
 	output logic [31:0] ALUResultE,
 	output logic [31:0] WriteDataE,
 	output logic [31:0] PCPlus4E,
 	output logic PCSrcE,
 	output logic [4:0] Rs2E, Rs1E,
 	output logic MemWriteE,
-	output logic [2:0] StoreSrcE,
+	output logic [1:0] StoreSrcE,
 	output logic [2:0] LoadSrcE,
 	output logic [31:0] PCTargetE
 	);

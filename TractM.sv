@@ -11,7 +11,7 @@ module TractM(
 	input logic [4:0] RdM1,
 	input logic clk,
 	input logic [31:0] PCPlus4M1,
-	input logic [2:0] StoreSrcM,
+	input logic [1:0] StoreSrcM,
 	input logic [2:0] LoadSrcM,
 	output logic [31:0] ReadPartDataM, PCPlus4M,
 	output logic [1:0] ResultSrcM,
